@@ -1,13 +1,25 @@
-[error] java.lang.RuntimeException: found version conflict(s) in library dependencies; some are suspected to be binary incompatible:
-[error] 
-[error] 	* org.scala-lang.modules:scala-java8-compat_2.12:1.0.2 (early-semver) is selected over {0.8.0}
-[error] 	    +- org.apache.kafka:kafka_2.12:3.3.2                  (depends on 1.0.2)
-[error] 	    +- com.typesafe.akka:akka-actor_2.12:2.7.0            (depends on 0.8.0)
-[error] 
-[error] 
-[error] this can be overridden using libraryDependencySchemes or evictionErrorLevel
-[error] 	at scala.sys.package$.error(package.scala:30)
-[error] 	at sbt.internal.LibraryManagement$.resolve$1(LibraryManagement.scala:89)
+[error] sbt.librarymanagement.ResolveException: Error downloading org.scala-lang:scala-library:2.12
+[error]   Not found
+[error]   Not found
+[error]   not found: /Users/renattob/.ivy2/localorg.scala-lang/scala-library/2.12/ivys/ivy.xml
+[error]   not found: https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   not found: https://dl.bintray.com/spark-packages/maven/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   forbidden: https://mvnrepository.com/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   not found: https://repo.typesafe.com/typesafe/simple/maven-releases/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error] Error downloading org.scala-lang:scala-reflect:2.12
+[error]   Not found
+[error]   Not found
+[error]   not found: /Users/renattob/.ivy2/localorg.scala-lang/scala-reflect/2.12/ivys/ivy.xml
+[error]   not found: https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   not found: https://dl.bintray.com/spark-packages/maven/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   forbidden: https://mvnrepository.com/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   not found: https://repo.typesafe.com/typesafe/simple/maven-releases/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error] 	at lmcoursier.CoursierDependencyResolution.unresolvedWarningOrThrow(CoursierDependencyResolution.scala:344)
+[error] 	at lmcoursier.CoursierDependencyResolution.$anonfun$update$38(CoursierDependencyResolution.scala:313)
+[error] 	at scala.util.Either$LeftProjection.map(Either.scala:573)
+[error] 	at lmcoursier.CoursierDependencyResolution.update(CoursierDependencyResolution.scala:313)
+[error] 	at sbt.librarymanagement.DependencyResolution.update(DependencyResolution.scala:60)
+[error] 	at sbt.internal.LibraryManagement$.resolve$1(LibraryManagement.scala:59)
 [error] 	at sbt.internal.LibraryManagement$.$anonfun$cachedUpdate$12(LibraryManagement.scala:133)
 [error] 	at sbt.util.Tracked$.$anonfun$lastOutput$1(Tracked.scala:73)
 [error] 	at sbt.internal.LibraryManagement$.$anonfun$cachedUpdate$20(LibraryManagement.scala:146)
@@ -32,11 +44,19 @@
 [error] 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 [error] 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 [error] 	at java.lang.Thread.run(Thread.java:750)
-[error] (ssExtractDependencies) found version conflict(s) in library dependencies; some are suspected to be binary incompatible:
-[error] 
-[error] 	* org.scala-lang.modules:scala-java8-compat_2.12:1.0.2 (early-semver) is selected over {0.8.0}
-[error] 	    +- org.apache.kafka:kafka_2.12:3.3.2                  (depends on 1.0.2)
-[error] 	    +- com.typesafe.akka:akka-actor_2.12:2.7.0            (depends on 0.8.0)
-[error] 
-[error] 
-[error] this can be overridden using libraryDependencySchemes or evictionErrorLevel
+[error] (ssExtractDependencies) sbt.librarymanagement.ResolveException: Error downloading org.scala-lang:scala-library:2.12
+[error]   Not found
+[error]   Not found
+[error]   not found: /Users/renattob/.ivy2/localorg.scala-lang/scala-library/2.12/ivys/ivy.xml
+[error]   not found: https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   not found: https://dl.bintray.com/spark-packages/maven/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   forbidden: https://mvnrepository.com/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error]   not found: https://repo.typesafe.com/typesafe/simple/maven-releases/org/scala-lang/scala-library/2.12/scala-library-2.12.pom
+[error] Error downloading org.scala-lang:scala-reflect:2.12
+[error]   Not found
+[error]   Not found
+[error]   not found: /Users/renattob/.ivy2/localorg.scala-lang/scala-reflect/2.12/ivys/ivy.xml
+[error]   not found: https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   not found: https://dl.bintray.com/spark-packages/maven/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   forbidden: https://mvnrepository.com/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom
+[error]   not found: https://repo.typesafe.com/typesafe/simple/maven-releases/org/scala-lang/scala-reflect/2.12/scala-reflect-2.12.pom

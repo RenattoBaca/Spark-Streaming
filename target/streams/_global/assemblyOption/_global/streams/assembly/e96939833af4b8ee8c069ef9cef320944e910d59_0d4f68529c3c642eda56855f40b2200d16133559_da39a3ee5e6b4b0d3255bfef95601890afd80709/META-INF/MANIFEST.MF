@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Spark Integration for Kafka 0.10
+Implementation-Version: 3.2.2
+Specification-Vendor: The Apache Software Foundation
+Specification-Title: Spark Integration for Kafka 0.10
+Build-Jdk-Spec: 1.8
+Created-By: Maven Archiver 3.4.0
+Specification-Version: 3.2
+Implementation-Vendor: The Apache Software Foundation
+

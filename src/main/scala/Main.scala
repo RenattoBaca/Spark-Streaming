@@ -1,22 +1,18 @@
-import Helpers.Words
-import akka.util.Helpers.Requiring
-import org.apache.kafka.clients.consumer.ConsumerConfig
-import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.rdd
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
-import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
-import org.apache.spark.streaming.{Seconds, StreamingContext}
-
+import Helpers.WordsCount
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.{Dataset, SaveMode, SparkSession}
 
 object Main {
 
-  private def exampleStreaming(): Unit = {
+  def main(args: Array[String]): Unit = {
 
     val topics = "BigDataTest"
     val kafkaBroker = "localhost:9092"
-    val groupId = "0"
-    val topicsSet = topics.split(",").toSet
-
+    val driver = "org.postgresql.Driver"
+    val url = "jdbc:postgresql://localhost:5455/postgresDB"
+    val user = "postgresUser"
+    val password = "postgresPW"
+    val tableWords = "public.T_WORDS"
 
 
     val spark = SparkSession.builder
@@ -26,31 +22,50 @@ object Main {
 
     spark.sparkContext.setLogLevel("ERROR")
 
-    val ssc = new StreamingContext(spark.sparkContext, Seconds(4))
+    import spark.implicits._
+    val kafkaDF = spark.readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", kafkaBroker)
+      .option("subscribe", topics)
+      .load()
+      .select("value")
 
+    val wordsDf = kafkaDF
+      .select(split($"value", " ").as("words"))
+      .select(explode($"words").as("word"),
+        current_timestamp().as("timestamp"))
 
-    val kafkaParams = Map[String, Object](
-      ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -> kafkaBroker,
-      ConsumerConfig.GROUP_ID_CONFIG -> groupId,
-      ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer],
-      ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer])
+    val windowedWordsDF = wordsDf
+      .withWatermark("timestamp", "6 seconds")
+      .groupBy($"word", window($"timestamp", "4 seconds", "2 seconds"))
+      .agg(
+        count("*").as("count"))
+      .select("word", "count", "window.start", "window.end")
 
-    val messages = KafkaUtils.createDirectStream[String, String](
-      ssc,
-      LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
-    val lines = messages.map(_.value)
-    val words = lines.flatMap(_.split(" "))
-    val wordCounts = words.map(x => (x, 1L)).reduceByKey(_ + _)
+    val wordsDs = windowedWordsDF.as[WordsCount]
 
-    wordCounts.print()
+    wordsDs
+      .writeStream
+      .foreachBatch { (batch: Dataset[WordsCount], _: Long) =>
+        // each executor can control the batch
+        // batch is a STATIC Dataset/DataFrame
 
-    ssc.start()
-    ssc.awaitTermination()
-    ssc.awaitTermination()
-  }
+        batch.write
+          .format("jdbc")
+          .option("driver", driver)
+          .option("url", url)
+          .option("user", user)
+          .option("password", password)
+          .option("dbtable", tableWords)
+          .mode(SaveMode.Append)
+          .save()
 
-  def main(args: Array[String]): Unit = {
-    exampleStreaming()
+        println("Row saved")
+      }
+      .start()
+      .awaitTermination()
+
+    //windowedWordsDF.writeStream.format("console").start().awaitTermination()
+
   }
 }

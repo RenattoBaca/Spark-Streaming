@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.6.3
+Built-By: gszadovszky
+Build-Jdk: 11.0.11
+Specification-Title: Apache Parquet Format Structures
+Specification-Version: 1.12.2
+Specification-Vendor: The Apache Software Foundation
+Implementation-Title: Apache Parquet Format Structures
+Implementation-Version: 1.12.2
+Implementation-Vendor-Id: org.apache.parquet
+Implementation-Vendor: The Apache Software Foundation
+git-SHA-1: 77e30c8093386ec52c3cfa6c34b7ef3321322c94
+

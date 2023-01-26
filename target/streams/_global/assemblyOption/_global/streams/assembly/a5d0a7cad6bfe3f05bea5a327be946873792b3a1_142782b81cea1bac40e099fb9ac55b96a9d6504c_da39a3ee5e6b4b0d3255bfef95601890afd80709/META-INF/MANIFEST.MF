@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Implementation-Title: ORC MapReduce
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Version: 1.6.14
+Specification-Title: ORC MapReduce
+Specification-Vendor: The Apache Software Foundation
+Specification-Version: 1.6
+
